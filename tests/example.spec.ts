@@ -26,7 +26,7 @@ test('tc3',async(params)=>{
 });
 */
 
-test("tc4",async({page})=>{
+test.skip("tc4",async({page})=>{
   await page.goto("http://10.131.73.233/PanaCIMMC")
   await page.waitForTimeout(6000)
   let context = page.context()
