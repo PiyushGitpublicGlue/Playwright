@@ -6,7 +6,7 @@ export default defineConfig({
   fullyParallel: false,
   globalSetup: require.resolve('./globalsetup.ts'),
   globalTeardown: require.resolve('./globalteardown.ts'),
-  testMatch: ['tests/test1.spec.ts'],
+  testMatch: ['tests/e2e1.spec.ts'],
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -30,7 +30,7 @@ export default defineConfig({
     {
       name: 'chrome',
       use: { ...devices['Desktop Chrome'] , channel: 'chrome'},
-      //testMatch: "./tests/test1.spec.ts"
+      testMatch: "/tests/e2e1.spec.ts"
       //, baseURL: "https://google.com"
     },
     /*
