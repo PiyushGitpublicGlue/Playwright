@@ -4,6 +4,9 @@ export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: false,
+  globalSetup: require.resolve('./globalsetup.ts'),
+  globalTeardown: require.resolve('./globalteardown.ts'),
+  testMatch: ['tests/test1.spec.ts'],
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
