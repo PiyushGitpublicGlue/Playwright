@@ -30,7 +30,7 @@ export default defineConfig({
     {
       name: 'chrome',
       use: { ...devices['Desktop Chrome'] , channel: 'chrome'},
-      testMatch: "/tests/e2e1.spec.ts"
+      testMatch: "/tests/e2e2.spec.ts"
       //, baseURL: "https://google.com"
     },
     /*
