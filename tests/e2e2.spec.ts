@@ -88,7 +88,7 @@ test.skip("testing1",async ({context})=>{
     await p1.pause()
 })
 
-test("test case7",async({context})=>{
+test.skip("test case7",async({context})=>{
     // step1 - lister registered
     let p = context.waitForEvent('page')
 
@@ -100,4 +100,25 @@ test("test case7",async({context})=>{
     await (await p).goto("https://youtube.com")
 
     await (await p).pause()
+})
+
+test.skip("tc8",async({page})=>{
+    await page.waitForTimeout(2000)
+    await page.context().newPage()
+    await page.waitForTimeout(2000)
+    let b1 = await page.context().browser()
+    let c1 = await b1?.newContext()
+    let p1 = await c1?.newPage()
+    await p1?.goto("https:youtube.com")
+    await page.waitForTimeout(2000)
+})
+
+test("tc9", async({page})=>{
+    await page.goto("https://demo.evershop.io/account/login")
+    await page.waitForTimeout(3000)
+    await page.locator("#field-email").fill("test@test.com")
+    await page.locator("#field-password").fill("Test@123")
+    page.locator("button.button.primary").click()
+    await page.waitForTimeout(3000)
+    //await page.pause()
 })
