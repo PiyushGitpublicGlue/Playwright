@@ -113,7 +113,7 @@ test.skip("tc8",async({page})=>{
     await page.waitForTimeout(2000)
 })
 
-test("tc9", async({page})=>{
+test.skip("tc9", async({page})=>{
     await page.goto("https://demo.evershop.io/account/login")
     await page.waitForTimeout(3000)
     await page.locator("#field-email").fill("test@test.com")
@@ -121,4 +121,55 @@ test("tc9", async({page})=>{
     page.locator("button.button.primary").click()
     await page.waitForTimeout(3000)
     //await page.pause()
+
+    // method getByAltText()
+    page.getByAltText("Piyush Saxena",{exact:false})
+
+})
+
+test.skip("tc10", async ({page})=>{
+    await page.goto("https://demo.evershop.io/account/login")
+    // method getByPlaceholder()
+    await page.getByPlaceholder("Email",{exact: true}).fill("test@test.com")
+    await page.waitForTimeout(2000)
+})
+
+test.skip("tect case 11",async({page})=>{
+    let browsercontext = page.context()
+    await page.goto("https://youtube.com")
+    await page.reload()
+    console.log("page is opened, URL is ",page.url())
+    let tileIs = await page.title()
+    console.log("page title is : ",tileIs)
+    await page.goto("https://microsoft.com")
+    await page.goBack()
+    await page.goForward()
+    let closed = page.isClosed()
+    console.log("is browser closed : ", closed)
+    await page.close()
+    closed = page.isClosed()
+    console.log("is browser closed now ?: ", closed)
+    let p2 = await browsercontext.newPage()
+    await p2.goto("https://www.nvidia.com/en-in/")
+
+})
+
+test.skip("test case 12", async({page})=>{
+    await page.goto("https://youtube.com")
+    let p1 = await page.context().newPage()
+    let p2 = await page.context().newPage()
+    await page.goto("https://microsoft.com")
+    await page.bringToFront()
+    console.log("Size before: ",page.viewportSize())
+    await page.setViewportSize({width:500,height:400})
+    console.log("Size after: ",page.viewportSize())
+})
+
+test("test case 13", async({page})=>{
+    page.on('domcontentloaded', async (page)=>{
+        console.log("document loaded !!")
+    })
+
+    await page.goto("https://youtube.com")
+    await page.goto("https://microsoft.com")
 })
