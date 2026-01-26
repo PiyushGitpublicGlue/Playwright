@@ -165,11 +165,40 @@ test.skip("test case 12", async({page})=>{
     console.log("Size after: ",page.viewportSize())
 })
 
-test("test case 13", async({page})=>{
+test.skip("test case 13", async({page})=>{
     page.on('domcontentloaded', async (page)=>{
         console.log("document loaded !!")
     })
 
     await page.goto("https://youtube.com")
     await page.goto("https://microsoft.com")
+})
+
+test("test case 14", async({page})=>{
+    await page.goto("https://demo.evershop.io/account/login")
+    /*
+    let l1 = page.locator("#field-email")
+    await l1.fill("Piyush")
+    await l1.clear()
+
+    let bb = await l1.boundingBox()
+    console.log("boundary boxing : ",bb)
+    */
+   let l1 = page.locator("input")
+   let count = await l1.count()
+   console.log("count : ",count)
+   for(const ele of await l1.all()){
+    await ele.fill("Sakshi")
+   }
+   await l1.nth(0).fill("Piyush")
+
+   let buttonloc =  page.locator("button[class='button primary']")
+   let classname = await buttonloc.getAttribute("class")
+   console.log("Class name is : ",classname)
+
+   console.log("InnerText is : ",await buttonloc.innerText())
+   console.log("InnerHTML is : ",await buttonloc.innerHTML())
+
+   console.log("IsEnabled : ",await buttonloc.isEnabled())
+   console.log("IsHidden : ",await buttonloc.isHidden())
 })
