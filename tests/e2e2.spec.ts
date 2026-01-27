@@ -1,3 +1,4 @@
+import { TIMEOUT } from "node:dns";
 import { BrowserContext, test,Cookie } from "playwright/test";
 
 test.skip("TC1",async ({browser})=>{})
@@ -174,7 +175,7 @@ test.skip("test case 13", async({page})=>{
     await page.goto("https://microsoft.com")
 })
 
-test("test case 14", async({page})=>{
+test.skip("test case 14", async({page})=>{
     await page.goto("https://demo.evershop.io/account/login")
     /*
     let l1 = page.locator("#field-email")
@@ -201,4 +202,10 @@ test("test case 14", async({page})=>{
 
    console.log("IsEnabled : ",await buttonloc.isEnabled())
    console.log("IsHidden : ",await buttonloc.isHidden())
+})
+
+test("test case 15",async({page})=>{
+    //test.setTimeout(5000)
+    await page.goto("https://demo.evershop.io/account/login")
+    let l1 = page.locator("#field-email")
 })
