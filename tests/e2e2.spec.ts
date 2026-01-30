@@ -204,8 +204,60 @@ test.skip("test case 14", async({page})=>{
    console.log("IsHidden : ",await buttonloc.isHidden())
 })
 
-test("test case 15",async({page})=>{
+test.skip("test case 15",async({page})=>{
     //test.setTimeout(5000)
     await page.goto("https://demo.evershop.io/account/login")
     let l1 = page.locator("#field-email")
+    await l1.fill("test@test.com")
+    let l2 = page.locator("#field-password")
+    await l2.fill("Test@123")
+    let l3 = page.locator("//button[@type='button']").last()
+    await l3.click()
+
+    await page.waitForTimeout(5000)
+
+    let l4 = page.locator("//h3").nth(1)
+    await l4.isVisible()
+
+    await page.goto("https://demo.evershop.io/checkout")
+    await page.waitForTimeout(10000)
+    await page.locator("//select[@id='field-shippingAddress.country']").selectOption("US")
+    await page.waitForTimeout(5000)
+    await page.locator("//select[@id='field-shippingAddress.country']").selectOption({label:"United States"})
+})
+
+test("test case 16", async({page})=>{
+    await page.goto("https://demo.evershop.io/account/login")
+    let l1 = page.locator("#field-email")
+    await l1.fill("test@test.com")
+    let l2 = page.locator("#field-password")
+    await l2.fill("Test@123")
+    let l3 = page.locator("//button[@type='button']").last()
+    await l3.click()
+
+    await page.waitForTimeout(5000)
+
+    await page.goto("https://demo.evershop.io/cart")
+
+    let colCount = await page.locator("table thead tr th").count()
+
+    console.log("Col count is : ",colCount)
+
+    let col = await page.locator("table thead tr th").all()
+
+    let colNames : string[] = []
+
+    for(const ele of col){
+        let colName = await ele.locator("span").innerText()
+        colNames.push(colName)
+        //console.log("Coloun name is : ",colNames)
+    }
+
+    colNames.forEach((colname)=>{
+        console.log("Col name is : ",colname)
+    })
+
+    let rowCount = await page.locator("table tbody tr").count()
+    console.log("Row count is : ",rowCount)
+
 })
