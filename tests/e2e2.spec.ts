@@ -226,7 +226,7 @@ test.skip("test case 15",async({page})=>{
     await page.locator("//select[@id='field-shippingAddress.country']").selectOption({label:"United States"})
 })
 
-test("test case 16", async({page})=>{
+test.skip("test case 16", async({page})=>{
     await page.goto("https://demo.evershop.io/account/login")
     let l1 = page.locator("#field-email")
     await l1.fill("test@test.com")
@@ -260,4 +260,76 @@ test("test case 16", async({page})=>{
     let rowCount = await page.locator("table tbody tr").count()
     console.log("Row count is : ",rowCount)
 
+})
+
+test.skip("tabs",async ({page})=>{
+    await page.goto("https://selectorshub.com/xpath-practice-page/")
+
+    const newPagePromise = page.context().waitForEvent('page')
+
+    await page.locator(".elementor-headline.e-animated").click()
+    
+    const newPage = await newPagePromise
+
+    let pages = page.context().pages()
+    console.log("Pages count are :", pages.length)
+    
+    for(const p of pages){
+        let title = await p.title()
+        console.log("Title of page : ",title)
+
+        if(title.includes("Xpath")){
+            console.log("I want here")
+            await p.bringToFront()
+        }
+    }
+
+    //https://testrigor.com/?utm_campaign=Selectors%20Hub&utm_source=selectorshub&utm_medium=xpp&eid=LYFcml
+    // let bc = page.context() //browser context parent of page
+    // let p2 = await bc.newPage() //new page = tab
+    // let p3 = await bc.newPage() //new page = tab
+
+    // await page.bringToFront() //to make previous page activate
+    // await p2.bringToFront()
+
+    await page.pause()
+
+})
+
+test.skip("iFrames",async({page})=>{
+    await page.goto("https://selectorshub.com/iframe-scenario/")
+    //await page.locator("#inp_val").first().fill("Piyush")
+    const frameLocator = page.frameLocator(".elementor-widget-html iframe#pact1")
+    await frameLocator.locator("#inp_val").first().fill("Piyush")
+    page.frame({url:"https://selectorshub.com/input-box/"})?.locator("#jex").first().fill("Saxena")
+    await page.pause()
+})
+
+test.skip("keyboard keys",async({page})=>{
+    await page.goto("https://demo.evershop.io/account/login")
+    //await page.locator("#field-email").fill("Piyush")
+    await page.locator("#field-email").click()
+    await page.keyboard.type("Piyush")
+    await page.locator(".login__form__title.text-2xl.text-center.mb-6").dblclick()
+    //await page.keyboard.down('Control+c')
+    //await page.keyboard.up('Control+c')
+    await page.keyboard.press('Control+c')
+    await page.locator("#field-email").click()
+    await page.keyboard.press('Control+v')
+    await page.pause()
+})
+
+test("drag and drop",async({page})=>{
+    await page.goto("https://www.globalsqa.com/demo-site/draganddrop/")
+    let f1 = page.frameLocator("div[rel-title='Photo Manager'] iframe")
+    let src = f1.locator("#gallery li").first()
+    let target = f1.locator("#trash").first()
+
+    //click
+    await src.hover()
+    await page.mouse.down()
+    await target.hover()
+    await page.mouse.up()
+
+    await page.pause()
 })
