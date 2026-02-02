@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
-  globalTimeout: 36000000000,
+  globalTimeout: 40*1000,
   timeout: 40*1000,
   fullyParallel: false,
   globalSetup: require.resolve('./globalsetup.ts'),

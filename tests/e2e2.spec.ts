@@ -319,7 +319,7 @@ test.skip("keyboard keys",async({page})=>{
     await page.pause()
 })
 
-test("drag and drop",async({page})=>{
+test.skip("drag and drop",async({page})=>{
     await page.goto("https://www.globalsqa.com/demo-site/draganddrop/")
     let f1 = page.frameLocator("div[rel-title='Photo Manager'] iframe")
     let src = f1.locator("#gallery li").first()
@@ -331,5 +331,34 @@ test("drag and drop",async({page})=>{
     await target.hover()
     await page.mouse.up()
 
+    await page.pause()
+})
+
+test.skip("JS code",async({page})=>{
+    await page.goto("https://demo.evershop.io/account/login")
+    //await page.evaluate((arg1)=>{document.querySelector("input#field-email").value=arg1},"Piyush") //page function
+    //await page.evaluate((arg1)=>{document.querySelector("input#field-email").value="Piyush"},"Piyush")
+    let email = page.locator("input[name='email']")
+    await email.evaluate((ele,args)=>{ele.value=args},"Piyush") //here it coverts locator to HTML element
+    await page.pause()
+    
+})
+
+test("shadow dom",async({page})=>{
+    await page.goto("https://selectorshub.com/xpath-practice-page/")
+    //Direct method
+    //await page.locator("#kils").fill("Piyush")
+
+    //Old Scholl JS method
+    // await page.evaluate(()=>{
+    // let shadowHost = document.querySelector("div#userName")
+    // let shadowRoot = shadowHost?.shadowRoot
+    // if(shadowRoot){
+    //     shadowRoot.querySelector("#kils").value="Piyush Saxena"
+    // }
+    // })
+    
+    // Pericing approch >>> //shadow host >>> shadow element
+    await page.locator("div#userName >>> #kils").fill("Piyush Saxena")
     await page.pause()
 })
