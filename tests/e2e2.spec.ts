@@ -380,7 +380,7 @@ test.skip("asserstions1",async({page})=>{
     await page.pause()
 })
 
-test("expect 2",async()=>{
+test.skip("expect 2",async()=>{
     let expect_value = {id:34, name: 'Piyush'}
     let actual_value = {id:34, name: 'Piyush'} 
     //expect(actual_value).toEqual(actual_value) // {id:34, name: 'Piyush'} == {id:34, name: 'Piyush'}
@@ -408,4 +408,56 @@ test("expect 2",async()=>{
     expect(isValid).toBeTruthy()
     expect(marks).toBeGreaterThan(49)
 
+})
+
+test("screenshots1",async({page},testinfo)=>{
+    let expected_locator = "Welcome Back!"
+    await page.goto("https://playwright.dev/")
+    //let actual_locator = await page.locator(".login__form__title.text-2xl.text-center.mb-6").innerText()
+    //expect(actual_locator).toEqual(expected_locator)
+    expect(page.locator(".login__form__title.text-2xl.text-center.mb-6")).toHaveText(expected_locator)
+
+    let screenshot1 = await page.screenshot({
+        fullPage:true
+    })
+
+    //let screenshot2 = await page.locator(".login__form__title.text-2xl.text-center.mb-6").screenshot()
+
+    testinfo.attach('screenshot1',{
+        body: screenshot1,
+        contentType: 'image/png'
+    })
+
+    /*testinfo.attach('screenshot2',{
+        body: screenshot2,
+        contentType: 'image/png'
+    })
+    */
+    await page.pause()
+})
+
+test("screenshots2",async({page},testinfo)=>{
+    let expected_locator = "Welcome Back!"
+    await page.goto("https://demo.evershop.io/account/login")
+    //let actual_locator = await page.locator(".login__form__title.text-2xl.text-center.mb-6").innerText()
+    //expect(actual_locator).toEqual(expected_locator)
+    expect(page.locator(".login__form__title.text-2xl.text-center.mb-6")).toHaveText(expected_locator)
+
+    let screenshot3 = await page.screenshot({
+        fullPage:true
+    })
+
+    let screenshot4 = await page.locator(".login__form__title.text-2xl.text-center.mb-6").screenshot()
+
+    testinfo.attach('screenshot3',{
+        body: screenshot3,
+        contentType: 'image/png'
+    })
+
+    testinfo.attach('screenshot4',{
+        body: screenshot4,
+        contentType: 'image/png'
+    })
+
+    await page.pause()
 })
