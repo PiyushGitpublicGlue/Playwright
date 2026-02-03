@@ -1,5 +1,5 @@
 import { TIMEOUT } from "node:dns";
-import { BrowserContext, test,Cookie } from "playwright/test";
+import { BrowserContext, test,Cookie, expect } from "playwright/test";
 
 test.skip("TC1",async ({browser})=>{})
 
@@ -344,7 +344,7 @@ test.skip("JS code",async({page})=>{
     
 })
 
-test("shadow dom",async({page})=>{
+test.skip("shadow dom",async({page})=>{
     await page.goto("https://selectorshub.com/xpath-practice-page/")
     //Direct method
     //await page.locator("#kils").fill("Piyush")
@@ -361,4 +361,51 @@ test("shadow dom",async({page})=>{
     // Pericing approch >>> //shadow host >>> shadow element
     await page.locator("div#userName >>> #kils").fill("Piyush Saxena")
     await page.pause()
+})
+
+test.skip("assertions",async({page})=>{
+    let name = "Piyush"
+    let name2 = "Piyush1"
+
+    expect(name).toEqual(name2)
+})
+
+
+test.skip("asserstions1",async({page})=>{
+    let expected_locator = "Welcome Back! Piyush"
+    await page.goto("https://demo.evershop.io/account/login")
+    //let actual_locator = await page.locator(".login__form__title.text-2xl.text-center.mb-6").innerText()
+    //expect(actual_locator).toEqual(expected_locator)
+    expect(page.locator(".login__form__title.text-2xl.text-center.mb-6")).toHaveText(expected_locator)
+    await page.pause()
+})
+
+test("expect 2",async()=>{
+    let expect_value = {id:34, name: 'Piyush'}
+    let actual_value = {id:34, name: 'Piyush'} 
+    //expect(actual_value).toEqual(actual_value) // {id:34, name: 'Piyush'} == {id:34, name: 'Piyush'}
+    //expect(actual_value).toBe(expect_value) //// {id:34, name: 'Piyush'} === {id:34, name: 'Piyush'}
+
+
+    let actualArray = [5,8,"Piyush"]
+    let expectArray = [5,8]
+    expect(actualArray).toEqual(expect.arrayContaining(expectArray))
+
+    let actualObj = {id:34, name: 'Piyush'}
+    let expectObj = {name: 'Piyush'}
+    expect.soft(actualObj).not.toEqual(expect.objectContaining(expectObj)) //not for opposite operations in expect
+
+    let actualStr = "I am learning in Podtest"
+    let expectStr = "Podtest"
+    expect(actualStr).toEqual(expect.stringContaining(expectStr))
+
+    let name = undefined
+    let age = null
+    let marks = 50
+    let isValid = true
+    expect(name).toBeUndefined()
+    expect(age).toBeNull()
+    expect(isValid).toBeTruthy()
+    expect(marks).toBeGreaterThan(49)
+
 })
