@@ -9,7 +9,9 @@ test("Login",async({page})=>{
     //let homePOM = new HomePom(page)
 
     await loginPOM.goto()
-    await (await (await (await loginPOM.fillUserName("test@test.com")).fillPassword("Test@123")).submit()).clickProductLink() //method chaining
+    //await (await (await (await loginPOM.fillUserName("test@test.com")).fillPassword("Test@123")).submit()).clickProductLink() //method chaining
+    let homePOM = await loginPOM.submitCredentials("test@test.com","Test@123")
+    await homePOM.clickProductLink()
 
 
     //transition 

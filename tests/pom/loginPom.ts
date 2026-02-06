@@ -37,4 +37,10 @@ export default class LoginPom{
         await this.submitBtn.click()
         return new HomePom(this.page)
     }
+
+    public async submitCredentials(userName:string,password:string):Promise <HomePom>{
+        await this.fillUserName(userName)
+        await this.fillPassword(password)
+        return await this.submit()
+    }
 }
