@@ -1,4 +1,5 @@
 import { Locator, Page } from "playwright";
+import ProductPOM from "./productPom";
 
 export default class HomePom{
 
@@ -11,7 +12,8 @@ export default class HomePom{
         this.productLink = page.locator(".product__list__name.h5.font-medium").first()
     }
 
-    public async clickProductLink(){
+    public async clickProductLink():Promise<ProductPOM>{
         await this.productLink.click()
+        return new ProductPOM(this.page)
     }
 }

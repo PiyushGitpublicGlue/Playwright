@@ -1,10 +1,13 @@
 import { Page } from "playwright"
 import { Locator } from "playwright"
+import CartPOM from "./cartPom"
+import { expect } from "playwright/test"
 
 export default class ProductPOM{
         private color: string
         private qtyTB: Locator
         private addToCartBtn: Locator
+        private viewCartBtn: Locator
         private page: Page
         
         constructor(page:Page){
@@ -12,6 +15,15 @@ export default class ProductPOM{
            this.color = "//button[text()='$$']"
            this.qtyTB = this.page.locator("#field-qty")
            this.addToCartBtn = this.page.locator("//button[text()='ADD TO CART']")
+           this.viewCartBtn = this.page.locator("//button[@data-slot='button']").first()
+        }
+
+        public async fillProductDetails(colorType:string,qty:string){
+                await this.selectColor(colorType)
+                await this.fillQuantity(qty)
+                await this.clickAddToCartButton()
+                //await this.page.waitForTimeout(3000)
+                return this.clickViewCartButton()
         }
 
         private createColorLocator(colorType: string){
@@ -21,7 +33,9 @@ export default class ProductPOM{
 
         public async selectColor(colorType: string):Promise<ProductPOM>{
 
-                await this.createColorLocator(colorType).click()
+                let colorTypeLocator = this.createColorLocator(colorType)
+                await colorTypeLocator.click()
+                await expect(colorTypeLocator.locator("//parent::li")).toHaveClass("group ")
                 return this
         }
 
@@ -34,6 +48,12 @@ export default class ProductPOM{
                 await this.addToCartBtn.click()
                 return this
         }
+
+        public async clickViewCartButton():Promise<CartPOM>{
+                await this.viewCartBtn.click()
+                return new CartPOM(this.page)
+        }
+        
 
 
 }

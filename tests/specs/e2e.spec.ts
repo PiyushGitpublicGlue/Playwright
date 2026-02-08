@@ -11,7 +11,8 @@ test("Login",async({page})=>{
     await loginPOM.goto()
     //await (await (await (await loginPOM.fillUserName("test@test.com")).fillPassword("Test@123")).submit()).clickProductLink() //method chaining
     let homePOM = await loginPOM.submitCredentials("test@test.com","Test@123")
-    await homePOM.clickProductLink()
+    let productPOM = await homePOM.clickProductLink()
+    await productPOM.fillProductDetails("Black","2")
 
 
     //transition 
