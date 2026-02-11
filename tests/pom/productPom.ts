@@ -15,14 +15,16 @@ export default class ProductPOM{
            this.color = "//button[text()='$$']"
            this.qtyTB = this.page.locator("#field-qty")
            this.addToCartBtn = this.page.locator("//button[text()='ADD TO CART']")
-           this.viewCartBtn = this.page.locator("//button[@data-slot='button']").first()
+           this.viewCartBtn = this.page.locator("//button[contains(text(), 'View Cart')]")
         }
 
         public async fillProductDetails(colorType:string,qty:string){
                 await this.selectColor(colorType)
+                await this.page.waitForTimeout(3000)
                 await this.fillQuantity(qty)
+                await this.page.waitForTimeout(3000)
                 await this.clickAddToCartButton()
-                //await this.page.waitForTimeout(3000)
+                await this.page.waitForTimeout(3000)
                 return this.clickViewCartButton()
         }
 
@@ -32,10 +34,10 @@ export default class ProductPOM{
         }
 
         public async selectColor(colorType: string):Promise<ProductPOM>{
-
+                await this.page.waitForLoadState("load")
                 let colorTypeLocator = this.createColorLocator(colorType)
                 await colorTypeLocator.click()
-                await expect(colorTypeLocator.locator("//parent::li")).toHaveClass("group ")
+                colorTypeLocator.locator("//parent::li[@class='group selected']").waitFor({state:"visible"})
                 return this
         }
 
