@@ -2,6 +2,7 @@ import { Page } from "playwright"
 import { Locator } from "playwright"
 import CartPOM from "./cartPom"
 import { expect } from "playwright/test"
+import ProductInoutDao from "../doa/inputDao/productInputDao"
 
 export default class ProductPOM{
         private color: string
@@ -18,14 +19,14 @@ export default class ProductPOM{
            this.viewCartBtn = this.page.locator("//button[contains(text(), 'View Cart')]")
         }
 
-        public async fillProductDetails(colorType:string,qty:string){
-                await this.selectColor(colorType)
+        public async fillProductDetails(productInputDao:ProductInoutDao):Promise<CartPOM>{
+                await this.selectColor(productInputDao.getColor())
                 await this.page.waitForTimeout(3000)
-                await this.fillQuantity(qty)
+                await this.fillQuantity(productInputDao.getQty())
                 await this.page.waitForTimeout(3000)
                 await this.clickAddToCartButton()
                 await this.page.waitForTimeout(3000)
-                return this.clickViewCartButton()
+                return await this.clickViewCartButton()
         }
 
         private createColorLocator(colorType: string){

@@ -1,0 +1,25 @@
+{
+    "TC1":{
+        "login":{
+            "username":"test@test.com",
+            "password":"Test@123"
+        },
+    "Home":{
+        "productName":"Ceramic Candy Bowl - Yellow" 
+    },
+    "product":{
+        "color":"Black",
+        "quantity":"3"
+    },
+    "checkout":{
+        "fullName":"Piyush Saxena",
+        "telephone":"89786756",
+        "address":"Delhi",
+         "city":"City-Delhi",
+         "country":"United States",
+         "province":"Alabama",
+         "postcode":"202001",
+         "shippingMethod":"Express" 
+    }
+    }
+}

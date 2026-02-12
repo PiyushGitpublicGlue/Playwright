@@ -1,6 +1,7 @@
 import { promises } from "node:dns";
 import { Locator, Page } from "playwright";
 import HomePom from "./homePom";
+import LoginInputDao from "../doa/inputDao/loginInputDao";
 
 export default class LoginPom{
     //instance variables
@@ -38,9 +39,9 @@ export default class LoginPom{
         return new HomePom(this.page)
     }
 
-    public async submitCredentials(userName:string,password:string):Promise <HomePom>{
-        await this.fillUserName(userName)
-        await this.fillPassword(password)
+    public async submitCredentials(loginInputDao:LoginInputDao):Promise <HomePom>{
+        await this.fillUserName(loginInputDao.getUserName())
+        await this.fillPassword(loginInputDao.getPassword())
         return await this.submit()
     }
 }

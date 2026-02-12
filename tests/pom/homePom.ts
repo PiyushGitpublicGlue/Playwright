@@ -9,7 +9,7 @@ export default class HomePom{
 
     constructor(page:Page){
         this.page = page
-        this.productLink = page.locator(".product__list__name.h5.font-medium").first()
+        this.productLink = page.locator("//h3[text()='Ceramic Candy Bowl - Yellow']")
     }
 
     public async clickProductLink():Promise<ProductPOM>{
